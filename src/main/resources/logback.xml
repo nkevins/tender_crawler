@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>..\TenderCrawlerLogs\TenderCrawler.log</file>
+        <file>/var/tendertracker/tendercrawler/logs/TenderCrawler.log</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>..\TenderCrawlerLogs\TenderCrawler.%d{yyyy-MM-dd}</fileNamePattern>
+            <fileNamePattern>/var/tendertracker/tendercrawler/logs/TenderCrawler.%d{yyyy-MM-dd}</fileNamePattern>
             <!-- keep 30 days' worth of history -->
             <maxHistory>30</maxHistory>
         </rollingPolicy>
