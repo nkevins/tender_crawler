@@ -66,6 +66,7 @@ public abstract class Crawler implements Runnable {
             logger.info("Return success: " + response.toString());
         } else {
             logger.error("Error returned from API server");
+            logger.debug("Request content: " + json);
         }
     }
 }
