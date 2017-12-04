@@ -10,16 +10,22 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 
 public abstract class Crawler implements Runnable {
 
     final static Logger logger = LoggerFactory.getLogger(Crawler.class);
     protected int maxBulkSaveSize;
+    private String username;
+    private String password;
 
     public Crawler() {
         try {
             maxBulkSaveSize = Integer.parseInt(Util.getConfigValue("bulk_save_size"));
+            username = Util.getConfigValue("username");
+            password = Util.getConfigValue("password");
         } catch (IOException ex) {
             maxBulkSaveSize = 5;
         }
@@ -39,6 +45,10 @@ public abstract class Crawler implements Runnable {
         // Set request header
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json; charset=utf8");
+
+        // Security authentication
+        String encoded = Base64.getEncoder().encodeToString((username+":"+password).getBytes(StandardCharsets.UTF_8));
+        con.setRequestProperty("Authorization", "Basic "+encoded);
 
         logger.info("Sending 'POST' request to URL : " + url);
 
