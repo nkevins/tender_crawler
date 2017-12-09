@@ -2,8 +2,7 @@ package com.chlorocode.tendercrawler.crawler;
 
 import com.chlorocode.tendercrawler.Util;
 import com.chlorocode.tendercrawler.model.Tender;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,9 +33,8 @@ public abstract class Crawler implements Runnable {
     public abstract void run();
 
     public void updateToDatabase(List<Tender> tenders) throws IOException {
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-        String json = gson.toJson(tenders);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(tenders);
 
         String url = Util.getConfigValue("api_url");
         URL obj = new URL(url);
@@ -55,8 +53,9 @@ public abstract class Crawler implements Runnable {
         // Send post request
         con.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(json);
-        wr.flush();
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
+        writer.write(json);
+        writer.flush();
         wr.close();
 
         int responseCode = con.getResponseCode();
@@ -77,6 +76,18 @@ public abstract class Crawler implements Runnable {
         } else {
             logger.error("Error returned from API server");
             logger.error("Request content: " + json);
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getErrorStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            logger.error("Response returned: " + response.toString());
         }
     }
 }
