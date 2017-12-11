@@ -2,6 +2,7 @@ package com.chlorocode.tendercrawler.crawler;
 
 import com.chlorocode.tendercrawler.constant.TenderStatus;
 import com.chlorocode.tendercrawler.model.Tender;
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.*;
@@ -29,7 +30,7 @@ public class SingaporePoolsQuotationCrawler extends Crawler {
         DateFormat publishDateFormat = new SimpleDateFormat("dd/MM/yy");
         DateFormat closingDateFormat = new SimpleDateFormat("dd/MM/yy H.m");
 
-        WebClient webClient = new WebClient();
+        WebClient webClient = new WebClient(BrowserVersion.CHROME);
         webClient.getOptions().setJavaScriptEnabled(true);
         webClient.getOptions().setThrowExceptionOnScriptError(false);
         webClient.getOptions().setCssEnabled(false);

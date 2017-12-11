@@ -16,18 +16,22 @@ public class Application {
     public static void main(String[] args) {
         logger.info("Tender Crawler Started");
 
-        CrawlerFactory crawlerFactory = new CrawlerFactory();
-        List<Crawler> crawlers = crawlerFactory.getAllCrawler();
+        try {
+            CrawlerFactory crawlerFactory = new CrawlerFactory();
+            List<Crawler> crawlers = crawlerFactory.getAllCrawler();
 
-        ExecutorService executor = Executors.newFixedThreadPool(20);
+            ExecutorService executor = Executors.newFixedThreadPool(20);
 
-        for (Crawler c : crawlers) {
-            executor.execute(c);
-        }
+            for (Crawler c : crawlers) {
+                executor.execute(c);
+            }
 
-        executor.shutdown();
-        while (!executor.isTerminated()) {
+            executor.shutdown();
+            while (!executor.isTerminated()) {
 
+            }
+        } catch (Exception e) {
+            logger.error("Main runner class exception", e);
         }
 
         logger.info("Tender Crawler Ended");
