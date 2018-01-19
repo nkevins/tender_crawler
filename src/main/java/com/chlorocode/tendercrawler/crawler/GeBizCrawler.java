@@ -76,7 +76,23 @@ public class GeBizCrawler extends Crawler {
                         t.setPublishedDate(dateFormat.parse(publishedDate.getTextContent().trim()));
                         t.setStatus(mapTenderStatus(status.getTextContent().trim()));
                         t.setTenderSource(SOURCE_ID);
-                        t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
+                        switch (tenderNoRawParts[0].trim()) {
+                            case "Quotation":
+                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunity/opportunityDetails.xhtml?code=" + tenderNo);
+                                break;
+                            case  "Qualification":
+                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunity/opportunityDetails.xhtml?code=" + tenderNo);
+                                break;
+                            case "Tender":
+                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
+                                break;
+                            case "Request for Information":
+                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
+                                break;
+                            default:
+                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
+                                break;
+                        }
 
                         String formattedClosingDate = closingDate.getFirstChild().getTextContent().trim() + " " + closingDate.getLastChild().getTextContent().trim();
                         formattedClosingDate = formattedClosingDate.replace("PM", " PM");
@@ -128,6 +144,9 @@ public class GeBizCrawler extends Crawler {
                     try {
                         HtmlDivision tenderNoDiv = (HtmlDivision) tenderNoDivs.get(i);
                         String tenderNo = tenderNoDiv.getTextContent().trim().replaceAll("\\s{2,}", " ");
+                        String[] tenderNoRawParts = tenderNo.split(" - ");
+                        String[] tenderNoParts = tenderNoRawParts[1].split("/");
+                        tenderNo = tenderNoParts[0];
 
                         HtmlAnchor title = page.getFirstByXPath("//div[text()='" + tenderNoDiv.getTextContent() + "']/following::a[@class='commandLink_TITLE-BLUE']");
                         HtmlDivision status = page.getFirstByXPath("//div[text()='" + tenderNoDiv.getTextContent() + "']/following::div[@class='formSectionHeader6_CHILD-DIV']");
@@ -142,7 +161,23 @@ public class GeBizCrawler extends Crawler {
                         t.setPublishedDate(dateFormat.parse(publishedDate.getTextContent().trim()));
                         t.setStatus(mapTenderStatus(status.getTextContent().trim()));
                         t.setTenderSource(SOURCE_ID);
-                        t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
+                        switch (tenderNoRawParts[0].trim()) {
+                            case "Quotation":
+                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunity/opportunityDetails.xhtml?code=" + tenderNo);
+                                break;
+                            case  "Qualification":
+                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunity/opportunityDetails.xhtml?code=" + tenderNo);
+                                break;
+                            case "Tender":
+                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
+                                break;
+                            case "Request for Information":
+                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
+                                break;
+                            default:
+                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
+                                break;
+                        }
 
                         String formattedClosingDate = closingDate.getFirstChild().getTextContent().trim() + " " + closingDate.getLastChild().getTextContent().trim();
                         formattedClosingDate = formattedClosingDate.replace("PM", " PM");
