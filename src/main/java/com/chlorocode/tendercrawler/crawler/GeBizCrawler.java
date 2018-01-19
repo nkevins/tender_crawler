@@ -2,6 +2,7 @@ package com.chlorocode.tendercrawler.crawler;
 
 import com.chlorocode.tendercrawler.constant.TenderStatus;
 import com.chlorocode.tendercrawler.model.Tender;
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
@@ -15,6 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 
 public class GeBizCrawler extends Crawler {
@@ -28,7 +30,7 @@ public class GeBizCrawler extends Crawler {
 
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
 
-        WebClient webClient = new WebClient();
+        WebClient webClient = new WebClient(BrowserVersion.CHROME);
         webClient.getOptions().setJavaScriptEnabled(true);
         webClient.getOptions().setThrowExceptionOnScriptError(false);
         webClient.getOptions().setCssEnabled(false);
@@ -115,6 +117,8 @@ public class GeBizCrawler extends Crawler {
                 }
 
                 if (nextPageAvailable) {
+                    int delay = ThreadLocalRandom.current().nextInt(1000, 5000 + 1);
+                    Thread.sleep(delay);
                     pageNo++;
                     logger.info("Going to next page: " + pageNo);
                     nextButtonInput.click();
@@ -200,6 +204,8 @@ public class GeBizCrawler extends Crawler {
                 }
 
                 if (nextPageAvailable) {
+                    int delay = ThreadLocalRandom.current().nextInt(1000, 5000 + 1);
+                    Thread.sleep(delay);
                     pageNo++;
                     logger.info("Going to next page: " + pageNo);
                     nextButtonInput.click();

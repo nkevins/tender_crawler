@@ -167,7 +167,7 @@ public class SingtelCrawler extends Crawler {
 
                 Map<String, Integer> fields = new HashMap<String, Integer>() {{
                     put("second", Calendar.SECOND);
-                    put("minute", Calendar.MINUTE);
+                    put("min", Calendar.MINUTE);
                     put("hour",   Calendar.HOUR);
                     put("day",    Calendar.DATE);
                     put("week",   Calendar.WEEK_OF_YEAR);
