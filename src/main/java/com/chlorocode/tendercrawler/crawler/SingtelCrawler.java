@@ -14,6 +14,9 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Crawler specific implementation for Singtel.
+ */
 public class SingtelCrawler extends Crawler {
 
     final static Logger logger = LoggerFactory.getLogger(SingtelCrawler.class);
@@ -31,7 +34,7 @@ public class SingtelCrawler extends Crawler {
         webClient.getOptions().setCssEnabled(false);
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
 
-        List<Tender> tenders = new ArrayList<Tender>();
+        List<Tender> tenders = new ArrayList<>();
 
         try {
             HtmlPage page = webClient.getPage(URL);

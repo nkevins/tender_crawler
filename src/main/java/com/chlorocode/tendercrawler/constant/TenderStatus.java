@@ -1,5 +1,8 @@
 package com.chlorocode.tendercrawler.constant;
 
+/**
+ * This class is used to define system constant.
+ */
 public final class TenderStatus {
     public static final String OPEN = "OPEN";
     public static final String CLOSED = "CLOSED";

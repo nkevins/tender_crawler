@@ -19,6 +19,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * Crawler specific implementation for SATS.
+ */
 public class SATSCrawler extends Crawler {
 
     final static Logger logger = LoggerFactory.getLogger(SATSCrawler.class);
@@ -36,7 +39,7 @@ public class SATSCrawler extends Crawler {
         webClient.getOptions().setCssEnabled(false);
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
 
-        List<Tender> tenders = new ArrayList<Tender>();
+        List<Tender> tenders = new ArrayList<>();
 
         try {
             HtmlPage page = webClient.getPage(URL);

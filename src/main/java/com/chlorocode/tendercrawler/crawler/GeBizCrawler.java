@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 
+/**
+ * Crawler specific implementation for GeBiz.
+ */
 public class GeBizCrawler extends Crawler {
 
     final static Logger logger = LoggerFactory.getLogger(GeBizCrawler.class);
@@ -38,7 +41,7 @@ public class GeBizCrawler extends Crawler {
 
         DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy K:m a");
 
-        List<Tender> tenders = new ArrayList<Tender>();
+        List<Tender> tenders = new ArrayList<>();
 
         try {
             // Get Open Opportunities

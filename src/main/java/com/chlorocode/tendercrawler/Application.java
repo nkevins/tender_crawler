@@ -9,10 +9,18 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * This is the main application class of the Tender Crawler application.
+ */
 public class Application {
 
     final static Logger logger = LoggerFactory.getLogger(Application.class);
 
+    /**
+     * This is the entry method of the application.
+     *
+     * @param args arguments
+     */
     public static void main(String[] args) {
         logger.info("Tender Crawler Started");
 

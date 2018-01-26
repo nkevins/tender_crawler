@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * Crawler specific implementation for Sesami NHG.
+ */
 public class SesamiNHGCrawler extends Crawler {
 
     final static Logger logger = LoggerFactory.getLogger(SesamiNHGCrawler.class);
@@ -34,7 +37,7 @@ public class SesamiNHGCrawler extends Crawler {
         webClient.getOptions().setCssEnabled(false);
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
 
-        List<Tender> tenders = new ArrayList<Tender>();
+        List<Tender> tenders = new ArrayList<>();
 
         try {
             HtmlPage page = webClient.getPage(URL);

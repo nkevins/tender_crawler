@@ -2,6 +2,9 @@ package com.chlorocode.tendercrawler.model;
 
 import java.util.Date;
 
+/**
+ * This is entity class to represent the external tender.
+ */
 public class Tender {
 
     private String referenceNo;

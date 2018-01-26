@@ -13,6 +13,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 
+/**
+ * This abstract class is the base class for every specific website crawler implementation.
+ */
 public abstract class Crawler implements Runnable {
 
     final static Logger logger = LoggerFactory.getLogger(Crawler.class);
@@ -20,6 +23,9 @@ public abstract class Crawler implements Runnable {
     private String username;
     private String password;
 
+    /**
+     * Constructor.
+     */
     public Crawler() {
         try {
             maxBulkSaveSize = Integer.parseInt(Util.getConfigValue("bulk_save_size"));
@@ -30,8 +36,17 @@ public abstract class Crawler implements Runnable {
         }
     }
 
+    /**
+     * This method is used to start the crawling function.
+     */
     public abstract void run();
 
+    /**
+     * This method is used to save crawled website into database.
+     *
+     * @param tenders list of tenders to be saved
+     * @throws IOException if error when calling the save REST API
+     */
     public void updateToDatabase(List<Tender> tenders) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(tenders);

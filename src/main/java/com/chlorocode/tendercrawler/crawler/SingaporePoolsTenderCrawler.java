@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * Crawler specific implementation for Singapore Pools Tender.
+ */
 public class SingaporePoolsTenderCrawler extends Crawler {
 
     final static Logger logger = LoggerFactory.getLogger(SingaporePoolsTenderCrawler.class);
@@ -36,7 +39,7 @@ public class SingaporePoolsTenderCrawler extends Crawler {
         webClient.getOptions().setCssEnabled(false);
         webClient.setAjaxController(new NicelyResynchronizingAjaxController());
 
-        List<Tender> tenders = new ArrayList<Tender>();
+        List<Tender> tenders = new ArrayList<>();
 
         try {
             HtmlPage page = webClient.getPage(URL);
@@ -90,12 +93,28 @@ public class SingaporePoolsTenderCrawler extends Crawler {
                         colCount = 0;
 
                         logger.debug(tender.toString());
+
+                        tenders.add(tender);
+                        if (tenders.size() > maxBulkSaveSize) {
+                            logger.info("Reaching post limit of: " + maxBulkSaveSize + ", send data to API");
+
+                            updateToDatabase(tenders);
+                            tenders.clear();
+                        }
                     } else {
                         logger.error("Table column size not expected. Expected: 5, Actual: " + row.getCells().size());
                     }
                 } catch (Exception ex) {
                     logger.error("Exception while processing row", ex);
                 }
+            }
+
+            // Send to API for the remaining tenders
+            if (tenders.size() != 0) {
+                logger.info("Post remaining tenders (" + tenders.size() + ")");
+
+                updateToDatabase(tenders);
+                tenders.clear();
             }
         } catch (Exception ex) {
             logger.error("Exception occured in main function", ex);
