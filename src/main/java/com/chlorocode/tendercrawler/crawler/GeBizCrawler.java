@@ -183,7 +183,7 @@ public class GeBizCrawler extends Crawler {
                     webClient.waitForBackgroundJavaScript(1000);
                 }
             } while (nextPageAvailable);
-            logger.info("Start Crawling Closed Opportunities");
+            logger.info("End Crawling Closed Opportunities");
 
             // Send to API for the remaining tenders
             if (tenders.size() != 0) {
@@ -193,7 +193,7 @@ public class GeBizCrawler extends Crawler {
                 tenders.clear();
             }
         } catch(Exception ex) {
-            logger.error("Exception occured in main function", ex);
+            logger.error("Exception occurred in main function", ex);
         }
 
         logger.info("Ending GeBiz Crawler");

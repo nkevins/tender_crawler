@@ -87,7 +87,7 @@ public class SATSCrawler extends Crawler {
                 tenders.clear();
             }
         } catch (Exception ex) {
-            logger.error("Exception occured in main function", ex);
+            logger.error("Exception occurred in main function", ex);
         }
 
         logger.info("Ending Sesami SATS Crawler");
