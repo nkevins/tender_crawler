@@ -101,8 +101,7 @@ public class SATSCrawler extends Crawler {
         String completeDate = datePart + " " + timePart.substring(0, 2) + ":" + timePart.substring(2, 4);
 
         try {
-            Date convertedDate = dateFormat.parse(completeDate);
-            return convertedDate;
+            return dateFormat.parse(completeDate);
         } catch (ParseException ex) {
             logger.error("Exception in parsing closing time " + rawDate, ex);
             return null;

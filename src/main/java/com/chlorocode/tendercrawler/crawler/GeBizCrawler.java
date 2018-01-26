@@ -60,9 +60,9 @@ public class GeBizCrawler extends Crawler {
 
                 List<?> tenderNoDivs = page.getByXPath("//div[@class='formSectionHeader6_TEXT']");
 
-                for (int i = 0; i < tenderNoDivs.size(); i++) {
+                for (Object div : tenderNoDivs) {
                     try {
-                        HtmlDivision tenderNoDiv = (HtmlDivision) tenderNoDivs.get(i);
+                        HtmlDivision tenderNoDiv = (HtmlDivision) div;
                         String tenderNo = tenderNoDiv.getTextContent().trim().replaceAll("\\s{2,}", " ");
                         String[] tenderNoRawParts = tenderNo.split(" - ");
                         String[] tenderNoParts = tenderNoRawParts[1].split("/");
@@ -81,23 +81,7 @@ public class GeBizCrawler extends Crawler {
                         t.setPublishedDate(dateFormat.parse(publishedDate.getTextContent().trim()));
                         t.setStatus(mapTenderStatus(status.getTextContent().trim()));
                         t.setTenderSource(SOURCE_ID);
-                        switch (tenderNoRawParts[0].trim()) {
-                            case "Quotation":
-                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunity/opportunityDetails.xhtml?code=" + tenderNo);
-                                break;
-                            case  "Qualification":
-                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunity/opportunityDetails.xhtml?code=" + tenderNo);
-                                break;
-                            case "Tender":
-                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
-                                break;
-                            case "Request for Information":
-                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
-                                break;
-                            default:
-                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
-                                break;
-                        }
+                        t.setTenderURL(getTenderURL(tenderNoRawParts[0].trim(), tenderNo));
 
                         String formattedClosingDate = closingDate.getFirstChild().getTextContent().trim() + " " + closingDate.getLastChild().getTextContent().trim();
                         formattedClosingDate = formattedClosingDate.replace("PM", " PM");
@@ -147,9 +131,9 @@ public class GeBizCrawler extends Crawler {
 
                 List<?> tenderNoDivs = page.getByXPath("//div[@class='formSectionHeader6_TEXT']");
 
-                for (int i = 0; i < tenderNoDivs.size(); i++) {
+                for (Object div : tenderNoDivs) {
                     try {
-                        HtmlDivision tenderNoDiv = (HtmlDivision) tenderNoDivs.get(i);
+                        HtmlDivision tenderNoDiv = (HtmlDivision) div;
                         String tenderNo = tenderNoDiv.getTextContent().trim().replaceAll("\\s{2,}", " ");
                         String[] tenderNoRawParts = tenderNo.split(" - ");
                         String[] tenderNoParts = tenderNoRawParts[1].split("/");
@@ -168,23 +152,7 @@ public class GeBizCrawler extends Crawler {
                         t.setPublishedDate(dateFormat.parse(publishedDate.getTextContent().trim()));
                         t.setStatus(mapTenderStatus(status.getTextContent().trim()));
                         t.setTenderSource(SOURCE_ID);
-                        switch (tenderNoRawParts[0].trim()) {
-                            case "Quotation":
-                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunity/opportunityDetails.xhtml?code=" + tenderNo);
-                                break;
-                            case  "Qualification":
-                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunity/opportunityDetails.xhtml?code=" + tenderNo);
-                                break;
-                            case "Tender":
-                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
-                                break;
-                            case "Request for Information":
-                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
-                                break;
-                            default:
-                                t.setTenderURL("https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo);
-                                break;
-                        }
+                        t.setTenderURL(getTenderURL(tenderNoRawParts[0].trim(), tenderNo));
 
                         String formattedClosingDate = closingDate.getFirstChild().getTextContent().trim() + " " + closingDate.getLastChild().getTextContent().trim();
                         formattedClosingDate = formattedClosingDate.replace("PM", " PM");
@@ -245,6 +213,21 @@ public class GeBizCrawler extends Crawler {
                 return TenderStatus.NO_AWARD;
             default:
                 return TenderStatus.OTHERS;
+        }
+    }
+
+    private String getTenderURL(String type, String tenderNo) {
+        switch (type) {
+            case "Quotation":
+                return "https://www.gebiz.gov.sg/ptn/opportunity/opportunityDetails.xhtml?code=" + tenderNo;
+            case  "Qualification":
+                return "https://www.gebiz.gov.sg/ptn/opportunity/opportunityDetails.xhtml?code=" + tenderNo;
+            case "Tender":
+                return "https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo;
+            case "Request for Information":
+                return "https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo;
+            default:
+                return "https://www.gebiz.gov.sg/ptn/opportunityportal/opportunityDetails.xhtml?code=" + tenderNo;
         }
     }
 }
